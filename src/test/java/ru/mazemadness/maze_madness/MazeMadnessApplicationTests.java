@@ -1,0 +1,13 @@
+package ru.mazemadness.maze_madness;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class MazeMadnessApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
