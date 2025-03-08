@@ -7,7 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import ru.mazemadness.maze_madness.jsonTypes.PlayerData;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+@SuppressWarnings("unused")
 @Configuration
 @ComponentScan
 @PropertySource("classpath:application.properties")
@@ -29,5 +33,10 @@ public class SocketServerConfig {
     @Bean
     public SpringAnnotationScanner springAnnotationScanner(SocketIOServer socketIOServer) {
         return new SpringAnnotationScanner(socketIOServer);
+    }
+
+    @Bean
+    public ConcurrentHashMap<String,PlayerData> connectedPlayers(){
+        return new ConcurrentHashMap<>();
     }
 }
