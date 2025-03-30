@@ -11,18 +11,18 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PlayerData {
     private short id;
+    private String name;
     private float x;
     private float y;
-    private String anim;
     private String playerColor = "0x000000";
 
     @Override
     public String toString() {
         return "PlayerData{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", x=" + x +
                 ", y=" + y +
-                ", anim='" + anim + '\'' +
                 ", playerColor='" + playerColor + '\'' +
                 '}';
     }

@@ -12,5 +12,4 @@ import lombok.Setter;
 public class MoveData {
     private float x;
     private float y;
-    private String anim;
 }
