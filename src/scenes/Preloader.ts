@@ -1,4 +1,10 @@
 import { Scene } from "phaser";
+import star from "Assets/star.png";
+import ground from "Assets/maps/grass.png";
+import props from "Assets/maps/props.png";
+import pIdle from "Assets/characters/playerIdle.png";
+import pRun from "Assets/characters/playerRun.png";
+import JSONMap from "Assets/maps/authorization_placeholder.json";
 
 export default class Preloader extends Scene {
   constructor() {
@@ -7,7 +13,7 @@ export default class Preloader extends Scene {
 
   init() {
     //  We loaded this image in our Boot Scene, so we can display it here
-    this.add.image(512, 384, "background");
+    this.add.image(0, 0, "background").setOrigin(0, 0);
 
     //  A simple progress bar. This is the outline of the bar.
     this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
@@ -18,19 +24,49 @@ export default class Preloader extends Scene {
     //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
     this.load.on("progress", (progress: number) => {
       //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-      bar.width = 4 + 460 * progress;
+      setTimeout(() => {
+        bar.width = 4 + 460 * progress;
+      }, 100);
     });
   }
 
   preload() {
-    //  Load the assets for the game - Replace with your own assets
-    this.load.setPath("assets");
+    const { load } = this;
 
-    this.load.image("logo", "logo.png");
-    this.load.image("star", "star.png");
+    load.image("star", star);
+    load.image("ground", ground);
+    load.image("props", props);
+    load.spritesheet("playerIdle", pIdle, {
+      frameWidth: 120,
+      frameHeight: 80,
+    });
+    load.spritesheet("playerRun", pRun, {
+      frameWidth: 120,
+      frameHeight: 80,
+    });
+    load.tilemapTiledJSON("gameMap", JSONMap);
   }
 
   create() {
+    this.scene.scene.anims.create({
+      key: "playerIdle",
+      frames: this.scene.scene.anims.generateFrameNumbers("playerIdle", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
+    this.scene.scene.anims.create({
+      key: "playerRun",
+      frames: this.scene.scene.anims.generateFrameNumbers("playerRun", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
     //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
     //  For example, you can define global animations here, so we can use them in other scenes.
 

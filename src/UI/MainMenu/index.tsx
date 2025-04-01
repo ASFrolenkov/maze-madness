@@ -1,85 +1,53 @@
-import { FC, useEffect, useState } from "react";
-import MainMenu from "Scenes/MainMenu";
-import { IRefPhaserGame } from "src/gameCore/PhaserGame";
+import { useState } from "react";
+import { GameUI } from "Types/game";
+import axios from "axios";
+import { Wrapper } from "./styled";
 
-interface ComponentProps {
-  game: IRefPhaserGame | null;
-}
+export const MainMenuUI: GameUI = ({ game }) => {
+  const [currentForm, setCurrentForm] = useState<"login" | "registration">(
+    "login"
+  );
 
-export const MainMenuUI: FC<ComponentProps> = ({ game }) => {
-  const [spritePosition, setSpritePosition] = useState({ x: 0, y: 0 });
-  const [canMoveSprite, setCanMoveSprite] = useState(true);
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.target as HTMLFormElement);
+    // game.game?.events.emit("emitSocket", "playerCreate", name);
 
-  const currentScene = game?.scene;
-
-  useEffect(() => {
-    setCanMoveSprite(false);
-    if (currentScene?.scene.key !== "MainMenu") {
-      setCanMoveSprite(true);
+    if (currentForm === "login") {
+      axios.post(import.meta.env.VITE_HTTP_ADDRESS + "/v1/login", {
+        username: data.get("username"),
+        password: data.get("password"),
+      });
     }
-  }, [currentScene?.scene.key]);
-
-  const changeScene = () => {
-    if (currentScene) {
-      const scene = currentScene as MainMenu;
-      scene.changeScene();
-    }
-  };
-
-  const moveSprite = () => {
-    if (currentScene) {
-      const scene = currentScene as MainMenu;
-
-      if (scene.scene.key === "MainMenu") {
-        scene.moveLogo(({ x, y }) => {
-          setSpritePosition({ x, y });
-        });
-      }
-    }
-  };
-
-  const addSprite = () => {
-    if (currentScene) {
-      const x = Phaser.Math.Between(64, currentScene.scale.width - 64);
-      const y = Phaser.Math.Between(64, currentScene.scale.height - 64);
-
-      const star = currentScene.add.sprite(x, y, "star");
-
-      currentScene.add.tween({
-        targets: star,
-        duration: 500 + Math.random() * 1000,
-        alpha: 0,
-        yoyo: true,
-        repeat: -1,
+    if (currentForm === "registration") {
+      axios.post(import.meta.env.VITE_HTTP_ADDRESS + "/v1/register", {
+        username: data.get("username"),
+        password: data.get("password"),
+        email: data.get("email"),
       });
     }
   };
+
   return (
-    <div>
-      <h1>Main Menu UI</h1>
+    <Wrapper onSubmit={submitForm}>
+      <input type="username" placeholder="username" name="username" required />
+      <input type="password" name="password" placeholder="password" required />
+      {currentForm === "registration" && (
+        <input type="email" name="email" placeholder="email" required />
+      )}
       <div>
-        <button className="button" onClick={changeScene}>
-          Change Scene
-        </button>
+        {currentForm === "login" && (
+          <a
+            onClick={(event) => {
+              event.preventDefault();
+              setCurrentForm("registration");
+            }}
+          >
+            Registration
+          </a>
+        )}
+        <button type="submit">submit</button>
       </div>
-      <div>
-        <button
-          disabled={canMoveSprite}
-          className="button"
-          onClick={moveSprite}
-        >
-          Toggle Movement
-        </button>
-      </div>
-      <div className="spritePosition">
-        Sprite Position:
-        <pre>{`{\n  x: ${spritePosition.x}\n  y: ${spritePosition.y}\n}`}</pre>
-      </div>
-      <div>
-        <button className="button" onClick={addSprite}>
-          Add New Sprite
-        </button>
-      </div>
-    </div>
+    </Wrapper>
   );
 };

@@ -24,8 +24,8 @@
     "paths": {
       "Types": ["src/types"],
       "Types/*": ["src/types/*"],
-      "Assets": ["public/assets"],
-      "Assets/*": ["public/assets/*"],
+      "Assets": ["src/assets"],
+      "Assets/*": ["src/assets/*"],
       "Public": ["public"],
       "Public/*": ["public/*"],
       "Constants": ["src/constants"],

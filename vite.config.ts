@@ -37,6 +37,7 @@ export default defineConfig({
     alias: {
       Types: resolve(__dirname, "./src/types"),
       Assets: resolve(__dirname, "./src/assets"),
+      Public: resolve(__dirname, "./public"),
       Sockets: resolve(__dirname, "./src/socket/Sockets"),
       SocketEvent: resolve(__dirname, "./src/socket/events"),
       Entities: resolve(__dirname, "./src/entities"),

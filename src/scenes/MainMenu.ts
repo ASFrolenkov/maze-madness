@@ -1,10 +1,10 @@
 import { GameObjects, Scene } from "phaser";
 
 import { EventBus } from "../gameCore/EventBus";
+import { ServerResponse } from "Types/player";
 
 export default class MainMenu extends Scene {
   background: GameObjects.Image;
-  logo: GameObjects.Image;
   title: GameObjects.Text;
   logoTween: Phaser.Tweens.Tween | null;
 
@@ -13,23 +13,33 @@ export default class MainMenu extends Scene {
   }
 
   create() {
-    this.background = this.add.image(512, 384, "background");
-
-    this.logo = this.add.image(512, 300, "logo").setDepth(100);
+    this.background = this.add
+      .image(0, 0, "background")
+      .setOrigin(0, 0)
+      .setDisplaySize(this.scale.width, this.scale.height);
 
     this.title = this.add
-      .text(512, 460, "Main Menu", {
+      .text(this.scale.width / 2, this.scale.height / 2 - 300, "Maze Madness", {
         fontFamily: "Arial Black",
         fontSize: 38,
-        color: "#ffffff",
-        stroke: "#000000",
+        color: "#413c4d",
+        stroke: "#ff9d9d",
         strokeThickness: 8,
         align: "center",
       })
-      .setOrigin(0.5)
+      .setOrigin(0.5, 0.5)
       .setDepth(100);
+    this.setEvents();
 
     EventBus.emit("current-scene-ready", this);
+  }
+
+  private setEvents() {
+    this.game.events.on("onSocket-playerCreated", (args: string) => {
+      const parsedResponse: ServerResponse = JSON.parse(args);
+      this.game.registry.set("players", parsedResponse);
+      this.scene.start("Game");
+    });
   }
 
   changeScene() {
@@ -50,7 +60,7 @@ export default class MainMenu extends Scene {
       }
     } else {
       this.logoTween = this.tweens.add({
-        targets: this.logo,
+        targets: this.title,
         x: { value: 750, duration: 3000, ease: "Back.easeInOut" },
         y: { value: 80, duration: 1500, ease: "Sine.easeOut" },
         yoyo: true,
@@ -58,8 +68,8 @@ export default class MainMenu extends Scene {
         onUpdate: () => {
           if (vueCallback) {
             vueCallback({
-              x: Math.floor(this.logo.x),
-              y: Math.floor(this.logo.y),
+              x: Math.floor(this.title.x),
+              y: Math.floor(this.title.y),
             });
           }
         },
