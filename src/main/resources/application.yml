@@ -1,0 +1,37 @@
+server:
+  host: 78.107.240.9
+  port: 8996
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  web:
+    resources:
+      static-locations: file:///S:/FTP_Server/resources
+  thymeleaf:
+    enabled: false
+    check-template-location: true
+    mode: HTML
+    prefix: file:///S:/FTP_Server/resources
+    suffix: .html
+    encoding: UTF-8
+    cache: false
+    servlet:
+      content-type: text/html
+  datasource:
+    url: jdbc:postgresql://localhost:5432/registration
+    username: ${SPRING_JDBC_USERNAME}
+    password: ${SPRING_JDBC_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  lifetime: 30m
