@@ -1,6 +1,6 @@
 package ru.mazemadness.maze_madness.utils;
 
-public class Utils {
+public class ValidationUtils {
 
     public Boolean isValidName(String playerName){
         if (playerName == null || playerName.isEmpty()){
