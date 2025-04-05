@@ -1,4 +1,4 @@
-package ru.mazemadness.maze_madness.service;
+package ru.mazemadness.maze_madness.interfaces;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public interface GameEvents {
     void onPingReceived(SocketIOClient client, String message);
     void onMoveReceived(SocketIOClient client, String moveData);
-    void onPlayerCreate(SocketIOClient client, String playerData);
+    void onPlayerCreate(SocketIOClient client, String playerName);
     void onPlayerDisconnected(SocketIOClient client);
+    void onPlayerConnected(SocketIOClient client);
 }
