@@ -6,7 +6,8 @@ server:
     include-binding-errors: always
 spring:
   config:
-    import: optional:file:.env[.properties]
+#    import: optional:file:.env[.properties]
+    import: optional:classpath:.env[.properties]
   web:
     resources:
       static-locations: file:///S:/FTP_Server/resources

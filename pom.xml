@@ -89,6 +89,19 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>.env</include>
+				</includes>
+				<filtering>true</filtering>  <!-- если нужно обрабатывать переменные Maven -->
+			</resource>
+			<!-- Стандартные ресурсы -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
