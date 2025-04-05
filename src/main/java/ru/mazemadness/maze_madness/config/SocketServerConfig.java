@@ -2,6 +2,7 @@ package ru.mazemadness.maze_madness.config;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import ru.mazemadness.maze_madness.jsonTypes.PlayerData;
+import ru.mazemadness.maze_madness.dto.PlayerDto;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -53,8 +54,10 @@ public class SocketServerConfig {
             socketIOServer.start();
         };
     }
+
+
     @Bean
-    public ConcurrentHashMap<String,PlayerData> connectedPlayers(){
+    public ConcurrentHashMap<String, PlayerDto> connectedPlayers(){
         return new ConcurrentHashMap<>();
     }
 }
