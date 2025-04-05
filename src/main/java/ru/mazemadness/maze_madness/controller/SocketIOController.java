@@ -1,28 +1,51 @@
 package ru.mazemadness.maze_madness.controller;
 
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.corundumstudio.socketio.annotation.OnConnect;
+import com.corundumstudio.socketio.annotation.OnDisconnect;
+import com.corundumstudio.socketio.annotation.OnEvent;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.mazemadness.maze_madness.jsonTypes.PlayerData;
+import org.springframework.stereotype.Controller;
+import ru.mazemadness.maze_madness.service.GameEventService;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-@Component
+@Controller
 @Slf4j
+@RequiredArgsConstructor
 public class SocketIOController {
-    @Autowired
-    private SocketIOServer socketIOServer;
-    private Boolean isConnected = false;
-    @Autowired
-    private ConcurrentHashMap<String, PlayerData> connectedPlayers;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final SocketIOServer server;
+    private final GameEventService gameEventService;
 
+    @OnConnect
+    public void onConnect(SocketIOClient client){
+        gameEventService.onPlayerConnected(client);
+    }
+
+    @OnDisconnect
+    public void onDisconnect(SocketIOClient client){
+        gameEventService.onPlayerDisconnected(client);
+    }
+    @OnEvent("ping")
+    public void onPingReceived(SocketIOClient client, String message){
+        gameEventService.onPingReceived(client, message);
+    }
+    @OnEvent("playerMove")
+    public void onMoveReceived(SocketIOClient client, String moveData){
+        gameEventService.onMoveReceived(client, moveData);
+    }
+    @OnEvent("playerCreate")
+    public void onPlayerCreate(SocketIOClient client, String playerName) {
+        gameEventService.onPlayerCreate(client, playerName);
+    }
+    @OnEvent("playerDisconnect")
+    public void onPlayerDisconnected(SocketIOClient client) {
+        gameEventService.onPlayerDisconnected(client);
+    }
     @PreDestroy
     public void stop(){
-        socketIOServer.stop();
+        server.stop();
     }
 
 }
