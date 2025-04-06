@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface GameEvents {
     void onPingReceived(SocketIOClient client, String message);
-    void onMoveReceived(SocketIOClient client, String moveData);
-    void onPlayerCreate(SocketIOClient client, String playerName);
+    void onMoveReceived(SocketIOClient client, String roomId, String moveData);
+    void onPlayerCreate(SocketIOClient client, String roomId, String playerName);
     void onPlayerDisconnected(SocketIOClient client);
     void onPlayerConnected(SocketIOClient client);
 }
