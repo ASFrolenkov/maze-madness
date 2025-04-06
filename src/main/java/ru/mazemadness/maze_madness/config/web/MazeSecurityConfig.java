@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.config;
+package ru.mazemadness.maze_madness.config.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.mazemadness.mazemadness_web.service.MazeUserDetailsService;
-import ru.mazemadness.mazemadness_web.service.MazeUserService;
+import ru.mazemadness.maze_madness.service.web.MazeUserDetailsService;
 
 @EnableWebSecurity
 @RequiredArgsConstructor

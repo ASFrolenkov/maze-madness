@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>ru.mazemadness</groupId>
 	<artifactId>maze_madness</artifactId>
-	<version>0.1</version>
+	<version>1.0</version>
 	<name>maze_madness</name>
-	<description>Spring Boot Backend project for Maze Madness Game</description>
+	<description>Spring Boot Backend project for Maze Madness Game. Web and socket servers.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -32,7 +32,10 @@
 		<jackson.version>2.17.0</jackson.version>
 		<slf4jApi.version>2.0.16</slf4jApi.version>
 		<h2database.version>2.3.232</h2database.version>
-
+		<jjwt-api.version>0.12.6</jjwt-api.version>
+		<jjwt-impl.version>0.12.5</jjwt-impl.version>
+		<jjwt-jackson.version>0.12.5</jjwt-jackson.version>
+		<lombok.version>1.18.36</lombok.version>
 	</properties>
 	<dependencies>
 
@@ -53,7 +56,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.36</version>
+			<version>${lombok.version}</version>
 <!--			<scope>provided</scope>-->
 			<optional>true</optional>
 		</dependency>
@@ -77,9 +80,67 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt-impl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt-jackson.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>.env</include>
+				</includes>
+				<filtering>true</filtering>  <!-- если нужно обрабатывать переменные Maven -->
+			</resource>
+			<!-- Стандартные ресурсы -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 @Slf4j
 @Configuration
 @ComponentScan
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
 public class SocketServerConfig {
     @Value("${server.host:localhost}")
     private String serverHost;

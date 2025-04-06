@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.dto;
+package ru.mazemadness.maze_madness.dto;
 
 import lombok.Data;
 

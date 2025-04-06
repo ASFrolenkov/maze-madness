@@ -1,10 +1,14 @@
+socket:
+  port: 8997
 server:
-  host: 78.107.240.9
+  host: ${SERVER_HOST}
   port: 8996
   error:
     include-message: always
     include-binding-errors: always
 spring:
+  application:
+    name: MazeMadness
   config:
 #    import: optional:file:.env[.properties]
     import: optional:classpath:.env[.properties]
@@ -36,3 +40,6 @@ spring:
 jwt:
   secret: ${JWT_SECRET_KEY}
   lifetime: 30m
+#logging:
+#  level:
+#    root: info

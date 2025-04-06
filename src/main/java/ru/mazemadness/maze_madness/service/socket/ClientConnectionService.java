@@ -1,4 +1,4 @@
-package ru.mazemadness.maze_madness.service;
+package ru.mazemadness.maze_madness.service.socket;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import org.springframework.stereotype.Service;

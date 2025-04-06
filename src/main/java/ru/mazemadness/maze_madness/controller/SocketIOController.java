@@ -9,7 +9,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import ru.mazemadness.maze_madness.service.RoomEventService;
+import ru.mazemadness.maze_madness.service.socket.RoomEventService;
 
 @Controller
 @Slf4j

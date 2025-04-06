@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mazemadness.maze_madness.dto.NamespaceRequest;
-import ru.mazemadness.maze_madness.service.NamespaceService;
+import ru.mazemadness.maze_madness.service.socket.NamespaceService;
 
 import java.util.List;
 

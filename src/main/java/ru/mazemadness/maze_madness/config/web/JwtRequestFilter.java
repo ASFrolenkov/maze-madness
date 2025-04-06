@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.config;
+package ru.mazemadness.maze_madness.config.web;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -12,7 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.mazemadness.mazemadness_web.utils.JwtTokenUtils;
+import ru.mazemadness.maze_madness.utils.JwtTokenUtils;
 
 import java.io.IOException;
 import java.util.stream.Collectors;

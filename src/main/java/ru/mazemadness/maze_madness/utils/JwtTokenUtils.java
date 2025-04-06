@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.utils;
+package ru.mazemadness.maze_madness.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

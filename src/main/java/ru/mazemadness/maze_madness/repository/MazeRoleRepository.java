@@ -1,8 +1,8 @@
-package ru.mazemadness.mazemadness_web.repository;
+package ru.mazemadness.maze_madness.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.mazemadness.mazemadness_web.entities.MazeRole;
+import ru.mazemadness.maze_madness.entities.MazeRole;
 
 import java.util.Optional;
 

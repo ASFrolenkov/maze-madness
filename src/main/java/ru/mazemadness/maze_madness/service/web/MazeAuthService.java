@@ -1,7 +1,6 @@
-package ru.mazemadness.mazemadness_web.service;
+package ru.mazemadness.maze_madness.service.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,13 +9,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.mazemadness.mazemadness_web.dto.JwtRequest;
-import ru.mazemadness.mazemadness_web.dto.JwtResponse;
-import ru.mazemadness.mazemadness_web.dto.MazeUserDto;
-import ru.mazemadness.mazemadness_web.dto.RegistrationUserDto;
-import ru.mazemadness.mazemadness_web.entities.MazeUser;
-import ru.mazemadness.mazemadness_web.exception.AppError;
-import ru.mazemadness.mazemadness_web.utils.JwtTokenUtils;
+import ru.mazemadness.maze_madness.dto.JwtRequest;
+import ru.mazemadness.maze_madness.dto.JwtResponse;
+import ru.mazemadness.maze_madness.dto.MazeUserDto;
+import ru.mazemadness.maze_madness.dto.RegistrationUserDto;
+import ru.mazemadness.maze_madness.entities.MazeUser;
+import ru.mazemadness.maze_madness.exception.AppError;
+import ru.mazemadness.maze_madness.utils.JwtTokenUtils;
 
 @Service
 @RequiredArgsConstructor

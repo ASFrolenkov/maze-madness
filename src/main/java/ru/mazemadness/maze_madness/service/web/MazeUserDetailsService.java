@@ -1,16 +1,15 @@
-package ru.mazemadness.mazemadness_web.service;
+package ru.mazemadness.maze_madness.service.web;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.mazemadness.mazemadness_web.entities.MazeUser;
-import ru.mazemadness.mazemadness_web.repository.MazeUserRepository;
+import ru.mazemadness.maze_madness.entities.MazeUser;
+import ru.mazemadness.maze_madness.repository.MazeUserRepository;
 
 import java.util.stream.Collectors;
 

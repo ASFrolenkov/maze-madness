@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.entities;
+package ru.mazemadness.maze_madness.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

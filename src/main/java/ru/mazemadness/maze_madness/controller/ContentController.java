@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.controller;
+package ru.mazemadness.maze_madness.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,11 +9,5 @@ public class ContentController {
     @GetMapping("/")
     public String index(){
         return "index.html";
-    }
-
-    @GetMapping("/admin/secured")
-    @CrossOrigin(origins = "*")
-    public String securedAdmin(){
-        return "secured.html";
     }
 }

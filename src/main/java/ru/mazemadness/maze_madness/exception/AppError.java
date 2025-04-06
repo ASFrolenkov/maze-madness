@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.exception;
+package ru.mazemadness.maze_madness.exception;
 
 import lombok.Data;
 

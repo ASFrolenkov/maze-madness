@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.service;
+package ru.mazemadness.maze_madness.service.web;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +9,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.mazemadness.mazemadness_web.dto.RegistrationUserDto;
-import ru.mazemadness.mazemadness_web.entities.MazeUser;
-import ru.mazemadness.mazemadness_web.repository.MazeUserRepository;
+import ru.mazemadness.maze_madness.dto.RegistrationUserDto;
+import ru.mazemadness.maze_madness.entities.MazeUser;
+import ru.mazemadness.maze_madness.repository.MazeUserRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

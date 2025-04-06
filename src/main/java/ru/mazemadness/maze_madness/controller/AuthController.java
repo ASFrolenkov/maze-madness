@@ -1,4 +1,4 @@
-package ru.mazemadness.mazemadness_web.controller;
+package ru.mazemadness.maze_madness.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mazemadness.mazemadness_web.dto.JwtRequest;
-import ru.mazemadness.mazemadness_web.dto.RegistrationUserDto;
-import ru.mazemadness.mazemadness_web.service.MazeAuthService;
+import ru.mazemadness.maze_madness.dto.JwtRequest;
+import ru.mazemadness.maze_madness.dto.RegistrationUserDto;
+import ru.mazemadness.maze_madness.service.web.MazeAuthService;
 
 @RestController
 @RequiredArgsConstructor
