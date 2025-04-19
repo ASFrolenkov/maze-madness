@@ -2,6 +2,7 @@ package ru.mazemadness.maze_madness.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ru.mazemadness.maze_madness.dto.socket.PlayerDto;
 
 import java.util.Collection;
 
@@ -19,6 +20,8 @@ public class MazeUser {
     private String password;
     @Column(name = "email")
     private String email;
+    @Embedded
+    private PlayerDto player;
 
     @ManyToMany
     @JoinTable(

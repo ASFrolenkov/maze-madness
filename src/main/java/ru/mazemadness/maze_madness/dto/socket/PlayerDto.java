@@ -1,12 +1,12 @@
-package ru.mazemadness.maze_madness.dto;
+package ru.mazemadness.maze_madness.dto.socket;
 
+import jakarta.persistence.Embeddable;
 import lombok.*;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Embeddable
 @ToString
 public class PlayerDto {
     private String playerSessionId;

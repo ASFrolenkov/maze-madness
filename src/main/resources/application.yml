@@ -1,7 +1,8 @@
 socket:
   port: 8997
 server:
-  host: ${SERVER_HOST}
+#  host: ${SERVER_HOST}
+  host: 192.168.0.105
   port: 8996
   error:
     include-message: always
@@ -36,10 +37,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
+    show-sql: false
 jwt:
   secret: ${JWT_SECRET_KEY}
-  lifetime: 30m
+  lifetime: 1d
+#cookie:
+#  longLifetime: 7d
+#  shortLifetime: 30m
 #logging:
 #  level:
 #    root: info

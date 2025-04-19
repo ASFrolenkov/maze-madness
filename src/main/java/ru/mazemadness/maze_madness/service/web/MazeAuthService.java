@@ -9,10 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.mazemadness.maze_madness.dto.JwtRequest;
-import ru.mazemadness.maze_madness.dto.JwtResponse;
-import ru.mazemadness.maze_madness.dto.MazeUserDto;
-import ru.mazemadness.maze_madness.dto.RegistrationUserDto;
+import ru.mazemadness.maze_madness.dto.auth.JwtRequest;
+import ru.mazemadness.maze_madness.dto.auth.JwtResponse;
+import ru.mazemadness.maze_madness.dto.auth.MazeUserDto;
+import ru.mazemadness.maze_madness.dto.auth.RegistrationUserDto;
 import ru.mazemadness.maze_madness.entities.MazeUser;
 import ru.mazemadness.maze_madness.exception.AppError;
 import ru.mazemadness.maze_madness.utils.JwtTokenUtils;
@@ -25,21 +25,28 @@ public class MazeAuthService {
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationManager authenticationManager;
 
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
-        try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        } catch (BadCredentialsException e){
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials"), HttpStatus.UNAUTHORIZED);
-        }
-//        UserDetails userDetails = mazeUserService.loadUserByUsername(authRequest.getUsername());
-        UserDetails userDetails = mazeUserDetailsService.loadUserByUsername(authRequest.getUsername());
-        String token = jwtTokenUtils.generateJwtToken(userDetails);
+//    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
+//        try{
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+//        } catch (BadCredentialsException e){
+//            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials"), HttpStatus.UNAUTHORIZED);
+//        }
+//        UserDetails userDetails = mazeUserDetailsService.loadUserByUsername(authRequest.getUsername());
+//        String token = jwtTokenUtils.generateJwtToken(userDetails);
+//
+//        return ResponseEntity.ok(new JwtResponse(token));
+//    }
 
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.set("Access-Control-Allow-Origin", "*");
-//        return ResponseEntity.ok().headers(responseHeaders).body(new JwtResponse(token));
-        return ResponseEntity.ok(new JwtResponse(token));
-    }
+//    public String createAuthToken(@RequestBody JwtRequest authRequest){
+//        try{
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+//        } catch (BadCredentialsException e){
+//            return "BadCredentials";
+//        }
+//        UserDetails userDetails = mazeUserDetailsService.loadUserByUsername(authRequest.getUsername());
+//
+//        return jwtTokenUtils.generateJwtToken(userDetails);
+//    }
 
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto){
         if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())){

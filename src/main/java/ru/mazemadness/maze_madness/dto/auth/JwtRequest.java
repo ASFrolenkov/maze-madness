@@ -1,4 +1,4 @@
-package ru.mazemadness.maze_madness.dto;
+package ru.mazemadness.maze_madness.dto.auth;
 
 import lombok.Data;
 
@@ -6,4 +6,5 @@ import lombok.Data;
 public class JwtRequest {
     private String username;
     private String password;
+//    private boolean rememberMe;
 }
