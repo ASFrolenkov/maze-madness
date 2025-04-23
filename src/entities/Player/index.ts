@@ -1,11 +1,13 @@
-import { Scene } from "phaser";
 import { Entity } from "../Entity";
-import { ServerResponse } from "Types/player";
+import { PlayerServerResponse } from "Types/player";
+import { logger } from "Helpers";
+import PhaserScene from "Core/PhaserScene";
 
 export class Player extends Entity {
   stamina = 100;
-  private playerName: Phaser.GameObjects.Text;
-  localScene: Scene;
+  private playerName: string;
+  private nameGameObject: Phaser.GameObjects.Text;
+  private localScene: PhaserScene;
   private directory = {
     up: false,
     down: false,
@@ -21,7 +23,7 @@ export class Player extends Entity {
   private serverPosY: number;
 
   constructor(
-    scene: Scene,
+    scene: PhaserScene,
     x: number,
     y: number,
     texture: string | Phaser.Textures.Texture,
@@ -44,20 +46,6 @@ export class Player extends Entity {
     scene.events.on("update", this.onUpdate, this);
 
     this.serverSync();
-    if (!this.isPlayable) {
-      //this.setCollisionCategory(2);
-      scene.game.events.on("onSocket-playerMoved", (args: string) => {
-        // можно переделать на получение игрока по ключу sessionKey, для этого надо сохранять sessionKey внутри игрока
-        const serverResponse: ServerResponse = JSON.parse(args);
-        Object.values(serverResponse).some((player) => {
-          if (player.id === this.id) {
-            this.serverPosX = player.x;
-            this.serverPosY = player.y;
-            return true;
-          }
-        });
-      });
-    }
   }
   // вынести отдельную функцию для передвижения? прогонять через эту функцию локальные координаты и координаты с сервера (интерполировать)
   private playerMove() {
@@ -106,9 +94,8 @@ export class Player extends Entity {
 
   private sendPlayerPos() {
     if (this.prevPosX !== this.x || this.prevPosY !== this.y) {
-      this.localScene.game.events.emit(
-        "emitSocket",
-        "playerMove",
+      this.localScene.emitSocket(
+        "gamePlayerMoveClient",
         JSON.stringify({ x: this.x, y: this.y })
       );
 
@@ -119,27 +106,15 @@ export class Player extends Entity {
   }
 
   private serverSync() {
-    this.localScene.game.events.on("onSocket-playerMoved", (args: string) => {
-      const serverResponse = JSON.parse(args) as {
-        x: number;
-        y: number;
-        anim: string;
-      };
-
-      this.serverPosX = serverResponse.x;
-      this.serverPosY = serverResponse.y;
-    });
-
-    this.localScene.game.events.on("onSocket-playerCreated", (args: string) => {
-      const serverResponse = JSON.parse(args) as {
-        x: number;
-        y: number;
-        anim: string;
-      };
-
-      this.serverPosX = serverResponse.x;
-      this.serverPosY = serverResponse.y;
-    });
+    this.localScene.addSocketListener(
+      "gamePlayerMoveServer",
+      (args: string) => {
+        const serverResponse = JSON.parse(args) as PlayerServerResponse;
+        const player = serverResponse[this.playerName];
+        this.serverPosX = player.currX;
+        this.serverPosY = player.currY;
+      }
+    );
   }
 
   private serverMove() {
@@ -148,8 +123,8 @@ export class Player extends Entity {
       this.prevPosY !== this.serverPosY
     ) {
       this.play("playerRun", true);
-      this.x = Phaser.Math.Linear(this.prevPosX, this.serverPosX, 0.9);
-      this.y = Phaser.Math.Linear(this.prevPosY, this.serverPosY, 0.9);
+      this.x = this.serverPosX; // Phaser.Math.Linear(this.prevPosX, this.serverPosX, 0.9);
+      this.y = this.serverPosY; // Phaser.Math.Linear(this.prevPosY, this.serverPosY, 0.9);
       if (this.prevPosX > this.x) {
         this.setFlipX(true);
         this.setOffset(54, 65);
@@ -167,8 +142,8 @@ export class Player extends Entity {
 
   private updateName() {
     // добавить интерполяцию
-    this.playerName.setX(this.x);
-    this.playerName.setY(this.y + 50);
+    this.nameGameObject.setX(this.x);
+    this.nameGameObject.setY(this.y + 50);
   }
 
   private onUpdate() {
@@ -181,11 +156,11 @@ export class Player extends Entity {
 
   setId(id: string | number) {
     this.id = id;
-    console.log("create player", this.id);
     return this;
   }
 
   setPlayable() {
+    logger.info("PLAYER", "is playable");
     this.scene.input.keyboard?.on("keydown", (arg: KeyboardEvent) => {
       const key = arg.code;
       if (key === "KeyW") {
@@ -226,7 +201,8 @@ export class Player extends Entity {
   }
 
   setName(name: string) {
-    this.playerName = this.localScene.add
+    this.playerName = name;
+    this.nameGameObject = this.localScene.add
       .text(this.x, this.y + 50, name, {
         fontFamily: "Arial Black",
         fontSize: 16,
@@ -242,9 +218,9 @@ export class Player extends Entity {
     // добавить удаление ника
     this.localScene.events.off("update", this.onUpdate, this);
     if (this.isPlayable) {
-      this.localScene.game.events.emit("emitSocket", "playerDisconnect");
+      this.localScene.emitSocket("gamePlayerDisconnectClient");
     }
     this.destroy();
-    this.playerName.destroy();
+    this.nameGameObject.destroy();
   }
 }

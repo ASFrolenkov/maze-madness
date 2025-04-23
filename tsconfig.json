@@ -37,7 +37,13 @@
       "Utils": ["src/utils"],
       "Utils/*": ["src/utils/*"],
       "UI": ["src/UI"],
-      "UI/*": ["src/UI"]
+      "UI/*": ["src/UI/*"],
+      "API": ["src/api"],
+      "API/*": ["src/api/*"],
+      "Core": ["src/gameCore"],
+      "Core/*": ["src/gameCore/*"],
+      "Helpers": ["src/helpers"],
+      "Helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src"],

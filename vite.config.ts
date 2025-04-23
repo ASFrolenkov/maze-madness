@@ -44,6 +44,10 @@ export default defineConfig({
       Scenes: resolve(__dirname, "./src/scenes"),
       Utils: resolve(__dirname, "./src/utils"),
       UI: resolve(__dirname, "./src/UI"),
+      API: resolve(__dirname, "./src/api"),
+      Core: resolve(__dirname, "./src/gameCore"),
+      Constants: resolve(__dirname, "./src/constants"),
+      Helpers: resolve(__dirname, "./src/helpers"),
     },
   },
 });

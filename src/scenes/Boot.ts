@@ -1,40 +1,19 @@
-import { Scene } from "phaser";
-import { io } from "socket.io-client";
 import bg from "Assets/w1_bw_minotaur_org.png";
+import PhaserScene from "Core/PhaserScene";
+import { SceneNames } from "Constants";
 
-export const socket = io(import.meta.env.VITE_SOCKET_ADDRESS);
-
-export default class Boot extends Scene {
+export default class Boot extends PhaserScene {
   constructor() {
-    super("Boot");
+    super(SceneNames.Boot);
   }
 
   preload() {
     const { load } = this;
-
+    // загружется 2 раза, почему?
     load.image("background", bg);
   }
 
   create() {
-    // Возможны ошибки если сокет не успел подключится. Доабвить проверки
-    // Проблема передачи sessionId в хранилище. Мб из-за того что сцены разные
-    this.registry.set("sessionId", socket.id);
-
-    window.addEventListener("unload", () => {
-      socket.disconnect();
-    });
-
-    socket.emit("ping", "hello world");
-
-    socket.onAny((event: string, ...args: unknown[]) => {
-      console.log(`onSocket-${event}`);
-      this.game.events.emit(`onSocket-${event}`, args);
-    });
-
-    this.game.events.on("emitSocket", (event: string, ...args: unknown[]) => {
-      socket.emit(event, ...args);
-    });
-
-    this.scene.start("Preloader");
+    this.nextScene();
   }
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FactoryUI } from "UI";
-import { IRefPhaserGame, PhaserGame } from "./gameCore/PhaserGame";
+import { IRefPhaserGame, PhaserGame } from "Core";
 
 function App() {
   const [game, setGame] = useState<IRefPhaserGame | null>(null);

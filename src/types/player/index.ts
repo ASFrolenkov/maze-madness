@@ -9,3 +9,12 @@ export interface PlayerResponse {
 export type ServerResponse = {
   [SessionKey: string]: PlayerResponse;
 };
+
+export type PlayerServerResponse = {
+  [username: string]: {
+    playerSessionId: string;
+    name: string;
+    currX: number;
+    currY: number;
+  };
+};

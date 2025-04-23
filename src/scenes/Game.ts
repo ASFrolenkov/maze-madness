@@ -1,10 +1,11 @@
-import { EventBus } from "../gameCore/EventBus";
-import { Scene } from "phaser";
 import { Player } from "Entities";
 import JSONMap from "Assets/maps/authorization_placeholder.json";
-import { PlayerResponse, ServerResponse } from "Types/player";
+import { PlayerResponse, PlayerServerResponse } from "Types/player";
+import PhaserScene from "Core/PhaserScene";
+import { SceneNames } from "Constants";
+import { logger } from "Helpers";
 
-export default class Game extends Scene {
+export default class Game extends PhaserScene {
   camera: Phaser.Cameras.Scene2D.Camera;
   background: Phaser.GameObjects.Image;
   gameText: Phaser.GameObjects.Text;
@@ -12,7 +13,18 @@ export default class Game extends Scene {
   currentPlayerId: number | string;
 
   constructor() {
-    super("Game");
+    super(SceneNames.Game);
+  }
+
+  preload() {
+    this.onShutdown(() => {
+      if (this.playersState.entries.length) {
+        this.playersState.forEach((player) => {
+          logger.info("SCENE", "destroy player");
+          player.destroyPlayer();
+        });
+      }
+    });
   }
 
   create() {
@@ -20,37 +32,37 @@ export default class Game extends Scene {
     this.createMap();
     this.createCamera();
     this.setEvents();
-
-    EventBus.emit("current-scene-ready", this);
   }
 
   private addPlayers() {
-    const players: ServerResponse = this.game.registry.get("players");
-    const currentSessionKey = this.registry.get("sessionId");
+    const players: PlayerServerResponse = this.game.registry.get("players");
+    const currentSessionID = this.getSessionId();
 
-    Object.keys(players).forEach((sessionKey) => {
-      const { id, x, y, name } = players[sessionKey];
-      console.log(name);
-      if (sessionKey === currentSessionKey) {
-        this.currentPlayerId = id;
+    Object.keys(players).forEach((username) => {
+      const { playerSessionId, currX, currY, name } = players[username];
+      logger.info("SOCKET", playerSessionId, currentSessionID);
+      if (playerSessionId === currentSessionID) {
+        this.currentPlayerId = playerSessionId;
         this.playersState.set(
-          id,
-          new Player(this, x, y, "playerIdle", 0)
-            .setId(id)
+          playerSessionId,
+          new Player(this, currX, currY, "playerIdle", 0)
+            .setId(playerSessionId)
             .setName(name)
             .setPlayable()
         );
       } else {
         this.playersState.set(
-          id,
-          new Player(this, x, y, "playerIdle", 0).setId(id).setName(name)
+          playerSessionId,
+          new Player(this, currX, currY, "playerIdle", 0)
+            .setId(playerSessionId)
+            .setName(name)
         );
       }
     });
   }
 
   private setEvents() {
-    this.game.events.on("onSocket-playerDisconnected", (args: string) => {
+    this.addSocketListener("playerDisconnectedServer", (args: string) => {
       const playerResoponse: PlayerResponse = JSON.parse(args);
       const { id } = playerResoponse;
 
@@ -58,7 +70,7 @@ export default class Game extends Scene {
       player?.destroyPlayer();
       this.playersState.delete(id);
     });
-    this.game.events.on("onSocket-playerConnected", (args: string) => {
+    this.addSocketListener("playerConnectedServer", (args: string) => {
       const parsedResponse: PlayerResponse = JSON.parse(args);
       const { id, x, y, name } = parsedResponse;
       this.playersState.set(
@@ -134,14 +146,5 @@ export default class Game extends Scene {
       tileColor: null,
       collidingTileColor: new Phaser.Display.Color(255, 0, 0, 100),
     });
-  }
-
-  changeScene() {
-    this.playersState.forEach((player) => {
-      console.log("destroy player");
-      player.destroyPlayer();
-    });
-
-    this.scene.start("GameOver");
   }
 }
