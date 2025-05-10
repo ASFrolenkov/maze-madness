@@ -37,12 +37,17 @@ export default defineConfig({
     alias: {
       Types: resolve(__dirname, "./src/types"),
       Assets: resolve(__dirname, "./src/assets"),
+      Public: resolve(__dirname, "./public"),
       Sockets: resolve(__dirname, "./src/socket/Sockets"),
       SocketEvent: resolve(__dirname, "./src/socket/events"),
       Entities: resolve(__dirname, "./src/entities"),
       Scenes: resolve(__dirname, "./src/scenes"),
       Utils: resolve(__dirname, "./src/utils"),
       UI: resolve(__dirname, "./src/UI"),
+      API: resolve(__dirname, "./src/api"),
+      Core: resolve(__dirname, "./src/gameCore"),
+      Constants: resolve(__dirname, "./src/constants"),
+      Helpers: resolve(__dirname, "./src/helpers"),
     },
   },
 });

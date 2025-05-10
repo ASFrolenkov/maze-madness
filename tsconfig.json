@@ -24,8 +24,8 @@
     "paths": {
       "Types": ["src/types"],
       "Types/*": ["src/types/*"],
-      "Assets": ["public/assets"],
-      "Assets/*": ["public/assets/*"],
+      "Assets": ["src/assets"],
+      "Assets/*": ["src/assets/*"],
       "Public": ["public"],
       "Public/*": ["public/*"],
       "Constants": ["src/constants"],
@@ -37,7 +37,13 @@
       "Utils": ["src/utils"],
       "Utils/*": ["src/utils/*"],
       "UI": ["src/UI"],
-      "UI/*": ["src/UI"]
+      "UI/*": ["src/UI/*"],
+      "API": ["src/api"],
+      "API/*": ["src/api/*"],
+      "Core": ["src/gameCore"],
+      "Core/*": ["src/gameCore/*"],
+      "Helpers": ["src/helpers"],
+      "Helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src"],

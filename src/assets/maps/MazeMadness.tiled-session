@@ -1,0 +1,32 @@
+{
+    "activeFile": "authorization_placeholder.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "authorization_placeholder.json": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 439.3333333333333,
+                "y": 418
+            }
+        },
+        "authorization_placeholder.json#ground": {
+            "scaleInDock": 1
+        },
+        "authorization_placeholder.json#props": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        }
+    },
+    "openFiles": [
+        "authorization_placeholder.json"
+    ],
+    "project": "MazeMadness.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "authorization_placeholder.json"
+    ],
+    "resizeMap.removeObjects": true
+}
